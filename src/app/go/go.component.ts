@@ -12,6 +12,16 @@ export class GoComponent implements OnInit {
 
 	ngOnInit() {}
 
+	getRandom() {
+		const chars =
+			"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		const length = 5;
+		var result = "";
+		for (var i = length; i > 0; --i)
+			result += chars[Math.floor(Math.random() * chars.length)];
+		return result;
+	}
+
 	async onSubmit() {
 		const userRef = doc(this.firestore, "users", this.name);
 		await setDoc(
@@ -19,7 +29,7 @@ export class GoComponent implements OnInit {
 			{ name: this.name, counter: 0 },
 			{ merge: true }
 		).then(() => {
-			this.router.navigate(["/users"]);
+			this.router.navigate(["/users"], { state: { name: this.name } });
 		});
 	}
 }

@@ -2,17 +2,19 @@
 	<h1>Welcome</h1>
 	<div class="divider"></div>
 	<div class="users">
+		<button mat-raised-button (click)="onCounterClicked()">+</button>
+
 		<table class="table">
 			<thead>
 				<tr>
-					<th scope="col">Name</th>
-					<!-- <th scope="col">Counter</th> -->
+					<th scope="col" class="header">Names</th>
+					<th scope="col" class="header">Counter</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr *ngFor="let user of users$ | async">
-					<th>{{ user.name }}</th>
-					<!-- <th>{{ user.counter }}</th> -->
+					<th [class]="user.name == name ? 'me' : ''">{{ user.name }}</th>
+					<th [class]="user.name == name ? 'me' : ''">{{ user.counter }}</th>
 				</tr>
 			</tbody>
 		</table>
