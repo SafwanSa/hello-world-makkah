@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "hello-world-makkah": {
+      "hosting": {
+        "hello-world": [
+          "hello-world-makkah"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "hello-world-makkah"
+  }
+}
