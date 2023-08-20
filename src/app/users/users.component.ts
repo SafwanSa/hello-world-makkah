@@ -21,9 +21,11 @@ export class UsersComponent implements OnInit {
 	users$: Observable<IUser[]>;
 	name: string;
 	counter = 0;
+	title: string;
 
 	constructor(private firestore: Firestore, private router: Router) {
 		this.setName();
+		this.getTitle();
 		const usersCollection = collection(this.firestore, "users");
 		this.users$ = collectionData(usersCollection, {
 			idField: "name",
@@ -36,6 +38,21 @@ export class UsersComponent implements OnInit {
 		};
 		if (state.name != null) this.name = state.name;
 	}
+
+	async getTitle() {
+		const unsubscribe = onSnapshot(
+			collection(this.firestore, "meta"),
+			(snapshot) => {
+				snapshot.forEach((doc) => {
+					this.title = doc.data().title;
+				});
+			},
+			(error) => {
+				// ...
+			}
+		);
+	}
+
 	ngOnInit() {}
 
 	async onCounterClicked() {
