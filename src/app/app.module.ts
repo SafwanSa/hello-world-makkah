@@ -11,9 +11,17 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
 import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { FormsModule } from "@angular/forms";
+import { MatInputModule } from "@angular/material/input";
+import { UsersComponent } from './users/users.component';
+import { GoComponent } from './go/go.component';
 
 @NgModule({
-	declarations: [AppComponent],
+	declarations: [		AppComponent,
+      UsersComponent,
+      GoComponent
+   ],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
@@ -23,6 +31,9 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 		NoopAnimationsModule,
 		MatFormFieldModule,
 		MatButtonModule,
+		FormsModule,
+		NgbModule,
+		MatInputModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],
