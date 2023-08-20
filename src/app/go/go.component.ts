@@ -1,13 +1,6 @@
-import { Component, inject, OnInit } from "@angular/core";
-import {
-	Firestore,
-	collectionData,
-	collection,
-	doc,
-	setDoc,
-} from "@angular/fire/firestore";
+import { Component, OnInit } from "@angular/core";
+import { Firestore, doc, setDoc } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
 @Component({
 	selector: "app-go",
 	templateUrl: "./go.component.html",

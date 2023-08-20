@@ -4,8 +4,8 @@ import {
 	collectionData,
 	collection,
 	doc,
-	setDoc,
 	onSnapshot,
+	updateDoc,
 } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
@@ -17,19 +17,18 @@ import { IUser } from "../models";
 	styleUrls: ["./users.component.css"],
 })
 export class UsersComponent implements OnInit {
-	users: IUser[] = [];
+	users$: Observable<IUser[]>;
 
-	constructor(private firestore: Firestore) {}
-
-	ngOnInit() {
+	constructor(private firestore: Firestore) {
 		const usersCollection = collection(this.firestore, "users");
-		const unsubscribe = onSnapshot(usersCollection, (querySnapshot) => {
-			this.users = [];
-			querySnapshot.forEach((doc) => {
-				this.users.push(doc.data() as IUser);
-			});
-		});
+		this.users$ = collectionData(usersCollection, {
+			idField: "name",
+		}) as Observable<IUser[]>;
 	}
+
+	ngOnInit() {}
+
+	onClickCounter() {}
 
 	ngOnDestroy(): void {}
 }

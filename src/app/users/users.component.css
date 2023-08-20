@@ -1,0 +1,12 @@
+.container {
+	padding: 3rem 0;
+}
+
+h1 {
+	text-align: center;
+}
+.divider {
+	width: 100%;
+	height: 2px;
+	background-color: #f64697;
+}
