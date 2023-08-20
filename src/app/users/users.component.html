@@ -12,7 +12,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let user of users$ | async">
+				<tr *ngFor="let user of users">
 					<th [class]="user.name == name ? 'me' : ''">{{ user.name }}</th>
 					<th [class]="user.name == name ? 'me' : ''">{{ user.counter }}</th>
 				</tr>

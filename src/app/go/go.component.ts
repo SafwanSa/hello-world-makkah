@@ -30,6 +30,7 @@ export class GoComponent implements OnInit {
 			{ merge: true }
 		).then(() => {
 			this.router.navigate(["/users"], { state: { name: this.name } });
+			localStorage.setItem("name", this.name);
 		});
 	}
 }

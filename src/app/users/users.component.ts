@@ -18,42 +18,66 @@ import { IUser } from "../models";
 	styleUrls: ["./users.component.css"],
 })
 export class UsersComponent implements OnInit {
-	users$: Observable<IUser[]>;
+	users: IUser[];
 	name: string;
 	counter = 0;
 	title: string;
+	subscriptions = [];
 
 	constructor(private firestore: Firestore, private router: Router) {
 		this.setName();
 		this.getTitle();
-		const usersCollection = collection(this.firestore, "users");
-		this.users$ = collectionData(usersCollection, {
-			idField: "name",
-		}) as Observable<IUser[]>;
+		this.getNames();
+		// const usersCollection = collection(this.firestore, "users");
+		// this.users$ = collectionData(usersCollection, {
+		// 	idField: "name",
+		// }) as Observable<IUser[]>;
 	}
+	ngOnInit() {}
 
-	setName() {
-		const state = this.router.getCurrentNavigation().extras.state as {
-			name: string;
-		};
-		if (state.name != null) this.name = state.name;
-	}
-
-	async getTitle() {
-		const unsubscribe = onSnapshot(
-			collection(this.firestore, "meta"),
-			(snapshot) => {
-				snapshot.forEach((doc) => {
-					this.title = doc.data().title;
-				});
-			},
-			(error) => {
-				// ...
-			}
+	getNames() {
+		this.subscriptions.push(
+			onSnapshot(
+				collection(this.firestore, "users"),
+				(snapshot) => {
+					this.users = [];
+					snapshot.forEach((doc) => {
+						this.users.push(doc.data() as IUser);
+					});
+					this.users = this.users.sort((a, b) =>
+						a.counter > b.counter ? -1 : 1
+					);
+				},
+				(error) => {
+					// ...
+				}
+			)
 		);
 	}
 
-	ngOnInit() {}
+	setName() {
+		// const state = this.router.getCurrentNavigation().extras.state as {
+		// 	name: string;
+		// };
+		// if (state.name != null) this.name = state.name;
+		this.name = localStorage.getItem("name");
+	}
+
+	async getTitle() {
+		this.subscriptions.push(
+			onSnapshot(
+				collection(this.firestore, "meta"),
+				(snapshot) => {
+					snapshot.forEach((doc) => {
+						this.title = doc.data().title;
+					});
+				},
+				(error) => {
+					// ...
+				}
+			)
+		);
+	}
 
 	async onCounterClicked() {
 		const userRef = doc(this.firestore, "users", this.name);
